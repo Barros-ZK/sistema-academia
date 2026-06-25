@@ -4,7 +4,7 @@ const expressLayouts = require('express-ejs-layouts');
 const cookieParser = require('cookie-parser');
 //definindo rotas
 const homeRouter = require('./routes/homeRoute');
-const assinanteRouter = require('./routes/assinantesRoute');
+const assinantesRouter = require('./routes/assinantesRoute');
 
 const funcionariosRouter = require('./routes/funcionariosRoute');
 const loginRouter = require('./routes/loginRoute');
@@ -12,7 +12,7 @@ const AuthMiddleware = require('./middlewares/authMiddleware');
 
 const app = express();
 //configurando a nossa pasta public
-app.use(express.static(__dirname + "/public"))
+app.use(express.static(__dirname + "/public"));
 
 app.use(cookieParser());
 //configurando nossas views para utilizar a ferramenta EJS
@@ -33,10 +33,10 @@ let auth = new AuthMiddleware();
 app.use(auth.verificarUsuarioLogado);
 
 app.use('/', homeRouter);
-app.use('/assinantes', assinanteRouter);
+// app.use('/assinantes', assinantesRouter);
 
-app.use(auth.verificarUsuarioDono);
-app.use('/funcionarios', funcionariosRouter);
+// app.use(auth.verificarUsuarioDono);
+// app.use('/funcionarios', funcionariosRouter);
 
 const server = app.listen('5000', function() {
     console.log('Servidor web iniciado');

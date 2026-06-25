@@ -1,14 +1,16 @@
+const FuncionarioModel = require("../models/funcionarioModel");
+
 class HomeController {
 
     constructor() {
 
     }
     
-    homeView(req, res){
+    async homeView(req, res){
         res.render('home/index');
     }
 
-    acessoRestritoView(req, res) {
+    async acessoRestritoView(req, res) {
         res.render('home/acessoRestrito');
     }
 

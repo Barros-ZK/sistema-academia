@@ -1,5 +1,4 @@
 const FuncionarioModel = require("../models/funcionarioModel");
-const UsuarioModel = require("../models/usuarioModel");
 
 class LoginController {
 
@@ -7,13 +6,13 @@ class LoginController {
 
     }
 
-    logout(req, res){
+    async logout(req, res){
         res.clearCookie("funcionarioLogado");
         res.redirect("/login");
         res.end();
     } 
 
-    loginView(req, res) {
+    async loginView(req, res) {
         res.render('login/index', { layout: 'login/index' });
     }
 

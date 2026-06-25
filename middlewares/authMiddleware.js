@@ -9,6 +9,7 @@ class AuthMiddleware {
             let funcionario = new FuncionarioModel();
             funcionario = await funcionario.buscarFuncionario(funcionarioId);
             if(funcionario != null && funcionario.fun_ativo == "S") {
+                res.locals.funcionario = funcionario.fun_nome;
                 next();
             }
             else{

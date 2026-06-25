@@ -58,3 +58,4 @@ CREATE TABLE tb_funcionarios (
 ); 
 
 insert into tb_funcionarios (fun_cpf, fun_nome, fun_telefone, fun_senha, fun_cargo, fun_ativo) values ('12345678909', 'Admin', '11123456789', 'admin', 'Dono', 'S');
+insert into tb_funcionarios (fun_cpf, fun_nome, fun_telefone, fun_senha, fun_cargo, fun_ativo) values ('12345678909', 'Ex-Admin', '12345678999', 'exadmin', 'Dono', 'N');
