@@ -1,14 +1,14 @@
-const express = require('express');
-const AssinantesController = require('../controllers/assinantesController');
+import express from 'express';
+import AssinantesController from '../controllers/assinantesController.js';
 
 const router = express.Router();
 let ctrl = new AssinantesController();
 
 router.get('/', ctrl.listarView);
 router.get('/listar', ctrl.listarAssinantes);
-// router.get('/criar', ctrl.criarView);
+router.get('/cadastrar', ctrl.cadastrarView);
 // router.get('/alterar/:id', ctrl.alterarView);
-// router.post('/criar', ctrl.gravarUsuario);
+router.post('/cadastrar', ctrl.cadastrarAssinante);
 // router.post('/excluir', ctrl.deletarUsuario);
 // router.post('/alterar', ctrl.alterarUsuario);
-module.exports = router;
+export default router;

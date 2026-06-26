@@ -1,4 +1,4 @@
-const FuncionarioModel = require("../models/funcionarioModel");
+import FuncionarioModel from "../models/funcionarioModel.js";
 
 class HomeController {
 
@@ -15,4 +15,4 @@ class HomeController {
     }
 
 }
-module.exports = HomeController;
+export default HomeController;

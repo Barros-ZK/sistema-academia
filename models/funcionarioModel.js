@@ -1,4 +1,4 @@
-const Database = require('../utils/database');
+import Database from '../utils/database.js';
 const conexao = new Database();
 
 class FuncionarioModel {
@@ -113,4 +113,4 @@ class FuncionarioModel {
     }
 }
 
-module.exports = FuncionarioModel;
+export default FuncionarioModel;

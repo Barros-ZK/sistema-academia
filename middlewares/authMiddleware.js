@@ -1,5 +1,4 @@
-const FuncionarioModel = require("../models/funcionarioModel");
-const UsuarioModel = require("../models/funcionarioModel");
+import FuncionarioModel from '../models/funcionarioModel.js';
 
 class AuthMiddleware {
 
@@ -34,4 +33,4 @@ class AuthMiddleware {
     }
 }
 
-module.exports = AuthMiddleware;
+export default AuthMiddleware;

@@ -1,5 +1,3 @@
-const { param } = require("../../../routes/assinantesRoute");
-
 document.addEventListener("DOMContentLoaded", function() {
 
     let btnExcluir = document.querySelectorAll(".btnExcluir");
@@ -27,12 +25,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function listarAssinantes(busca, parametros) {
         let paramsBusca = new URLSearchParams();
-        if(busca) {
+
+        if(busca == "") {
+            paramsBusca.append("parametros", "tudo");
+            parametros = [];
+        } else {
             paramsBusca.append("busca", busca);
-            for(let i = 0; i < parametros.length; i++) {
-                paramsBusca.append("parametros", parametros[i]);
-            }
         }
+
+        for(let i = 0; i < parametros.length; i++) {
+            paramsBusca.append("parametros", parametros[i]);
+        }
+
         fetch("/assinantes/listar?" + paramsBusca.toString())
         .then(function(resposta) {
             return resposta.json();
@@ -47,14 +51,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
         for(let i = 0; i < lista.length; i++) {
             html += `<tr>
-                        <td><%= listaAssinantes[i].ass_id %></td>
-                        <td><%= listaAssinantes[i].ass_cpf %></td>
-                        <td><%= listaAssinantes[i].ass_nome %></td>
-                        <td><%= listaAssinantes[i].ass_telefone %></td>
+                        <td>${lista[i].ass_id}</td>
+                        <td>${lista[i].ass_cpf}</td>
+                        <td>${lista[i].ass_nome}</td>
+                        <td>${lista[i].ass_telefone}</td>
                         <td>
                             <div>
-                                <button data-id="<%= listaAssinantes[i].ass_id %>" title="Excluir" class="btn btn-danger btnExcluir"><i class="fas fa-trash"></i></button>
-                                <a href="/assinantes/alterar/<%= listaAssinantes[i].ass_id %>" title="Editar" class="btn btn-primary">
+                                <button data-id="${lista[i].ass_id}" title="Excluir" class="btn btn-danger btnExcluir"><i class="fas fa-trash"></i></button>
+                                <a href="/assinantes/alterar/${lista[i].ass_id}" title="Editar" class="btn btn-primary">
                                     <i class="fas fa-pen"></i>
                                 </a>
                             </div>

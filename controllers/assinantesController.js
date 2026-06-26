@@ -1,4 +1,4 @@
-const AssinantesModel = require('../models/assinantesModel');
+import AssinantesModel from '../models/assinantesModel.js';
 
 class AssinantesController {
 
@@ -15,17 +15,40 @@ class AssinantesController {
     async listarAssinantes(req, res){
         let busca = req.query.busca;
         let parametros = req.query.parametros;
-        let assinante = new AssinantesModel();
-        let retorno = [];
 
-        for(let i = 0; i < parametros.length; i++) {
+        if (!parametros) {
+            parametros = [];
+        } else if (!Array.isArray(parametros)) {
+            parametros = [parametros];
+        }
+        
+        let assinante = new AssinantesModel();
+        let mapa = new Map();
+
+        for (let i = 0; i < parametros.length; i++) {
             let listaAssinantes = await assinante.listarAssinantes(parametros[i], busca);
-            
-            let retornoSet = new Set([ ...retorno, ...listaAssinantes]);
-            retorno = [...retornoSet];
+            for(let j = 0; j < listaAssinantes.length; j++) {
+                mapa.set(listaAssinantes[j].ass_id, listaAssinantes[j]);
+            }
         }
 
-        res.send(retorno);
+        res.send([...mapa.values()]);
+    }
+
+    async cadastrarView(req, res) {
+        res.render('assinantes/cadastrar');
+    }
+
+    async cadastrarAssinante(req, res) {
+        let ok = false;
+        if(req.body != null) {
+            if(req.body.cpf != null && req.body.nome != null && req.body.telefone != null) {
+                let assinante = new AssinantesModel(0, req.body.cpf, req.body.nome, req.body.telefone);
+                ok = assinante.cadastrarAssinante();
+            }
+        }
+
+        res.send({ ok: ok})
     }
 
     // async deletarUsuario(req, res){
@@ -35,13 +58,6 @@ class AssinantesController {
     //         ok = usuarioModel.deletarUsuario(req.body.usuarioId);
     //     }
     //     res.send({ok: ok})
-    // }
-
-    // async criarView(req, res) {
-    //     //chame o método que lista os perfis
-    //     let perfilModel = new PerfilModel();
-    //     let listaPerfil = await perfilModel.listar();
-    //     res.render('usuarios/criar', { lista: listaPerfil });
     // }
 
     // async alterarView(req, res) {
@@ -72,21 +88,6 @@ class AssinantesController {
 
     //     res.send({ ok: ok})
     // }
-
-    // async gravarUsuario(req, res) {
-    //     let ok = false;
-    //     if(req.body != null) {
-    //         if(req.body.nome != null && req.body.email != null && req.body.senha != null && req.body.confSenha != null && req.body.perfilId != null && req.body.ativo != null) {
-    //             if(req.body.senha == req.body.confSenha && req.body.perfilId > 0) {
-    //                 let ativo = req.body.ativo ? "S" : "N";
-    //                 let usuario = new UsuarioModel(0, req.body.nome, req.body.email, req.body.senha, ativo, req.body.perfilId);
-    //                 ok = usuario.gravarUsuario();
-    //             }
-    //         }
-    //     }
-
-    //     res.send({ ok: ok})
-    // }
 }
 
-module.exports = AssinantesController;
+export default AssinantesController;

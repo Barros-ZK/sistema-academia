@@ -1,5 +1,5 @@
-const express = require('express');
-const HomeController = require('../controllers/homeController');
+import express from 'express';
+import HomeController from '../controllers/homeController.js';
 
 const router = express.Router();
 
@@ -7,4 +7,4 @@ let ctrl = new HomeController();
 
 router.get('/', ctrl.homeView);
 router.get('/acessoRestrito', ctrl.acessoRestritoView);
-module.exports = router;
+export default router;
