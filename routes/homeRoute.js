@@ -7,4 +7,5 @@ let ctrl = new HomeController();
 
 router.get('/', ctrl.homeView);
 router.get('/acessoRestrito', ctrl.acessoRestritoView);
+router.get('/erroUrl', ctrl.erroUrlView);
 export default router;

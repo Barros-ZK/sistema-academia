@@ -51,14 +51,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
         for(let i = 0; i < lista.length; i++) {
             html += `<tr>
-                        <td>${lista[i].ass_id}</td>
                         <td>${lista[i].ass_cpf}</td>
                         <td>${lista[i].ass_nome}</td>
                         <td>${lista[i].ass_telefone}</td>
                         <td>
                             <div>
-                                <button data-id="${lista[i].ass_id}" title="Excluir" class="btn btn-danger btnExcluir"><i class="fas fa-trash"></i></button>
-                                <a href="/assinantes/alterar/${lista[i].ass_id}" title="Editar" class="btn btn-primary">
+                                <button data-id="${lista[i].ass_cpf}" title="Excluir" class="btn btn-danger btnExcluir"><i class="fas fa-trash"></i></button>
+                                <a href="/assinantes/alterar/${lista[i].ass_cpf}" title="Editar" class="btn btn-primary">
                                     <i class="fas fa-pen"></i>
                                 </a>
                             </div>

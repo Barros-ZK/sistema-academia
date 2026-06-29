@@ -9,7 +9,7 @@ import cookieParser from 'cookie-parser';
 import homeRouter from './routes/homeRoute.js';
 import assinantesRouter from './routes/assinantesRoute.js';
 
-// import funcionariosRouter from './routes/funcionariosRoute.js';
+import funcionariosRouter from './routes/funcionariosRoute.js';
 import loginRouter from './routes/loginRoute.js';
 import AuthMiddleware from './middlewares/authMiddleware.js';
 
@@ -46,8 +46,8 @@ app.use('/', homeRouter);
 app.use('/assinantes', assinantesRouter);
 
 app.use(auth.verificarUsuarioDono);
-// app.use('/funcionarios', funcionariosRouter);
+app.use('/funcionarios', funcionariosRouter);
 
 const server = app.listen('5000', function() {
-    console.log('Servidor web iniciado');
+    console.log('Sistema web iniciado');
 });

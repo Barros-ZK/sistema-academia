@@ -14,5 +14,8 @@ class HomeController {
         res.render('home/acessoRestrito');
     }
 
+    async erroUrlView(req, res) {
+        res.render('home/erroUrl');
+    }
 }
 export default HomeController;

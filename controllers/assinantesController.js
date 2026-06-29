@@ -28,7 +28,7 @@ class AssinantesController {
         for (let i = 0; i < parametros.length; i++) {
             let listaAssinantes = await assinante.listarAssinantes(parametros[i], busca);
             for(let j = 0; j < listaAssinantes.length; j++) {
-                mapa.set(listaAssinantes[j].ass_id, listaAssinantes[j]);
+                mapa.set(listaAssinantes[j].ass_cpf, listaAssinantes[j]);
             }
         }
 
@@ -43,12 +43,38 @@ class AssinantesController {
         let ok = false;
         if(req.body != null) {
             if(req.body.cpf != null && req.body.nome != null && req.body.telefone != null) {
-                let assinante = new AssinantesModel(0, req.body.cpf, req.body.nome, req.body.telefone);
+                let assinante = new AssinantesModel(req.body.cpf, req.body.nome, req.body.telefone);
                 ok = assinante.cadastrarAssinante();
             }
         }
 
-        res.send({ ok: ok})
+        res.send({ ok: ok })
+    }
+
+    async alterarView(req, res) {
+        if(req.params != null && req.params.cpf != null){  
+            let assinante = new AssinantesModel();        
+            assinante = await assinante.listarAssinantes("cpf", req.params.cpf);
+            if(assinante.length > 0) {
+                res.render('assinantes/alterar', { assinante: assinante });
+            } else {
+                res.render('home/erroUrl');
+            }
+        }
+    }
+    
+    async alterarAssinante(req, res){
+        let ok = false;
+        if(req.body != null) {
+            let assinante = new AssinantesModel();
+            assinante = await assinante.listarAssinantes("cpf", req.body.cpf);
+            if(assinante != null && assinante.length > 0 && req.body.nome != null && req.body.telefone != null) {
+                assinante = new AssinantesModel(req.body.cpf, req.body.nome, req.body.telefone);
+                ok = await assinante.alterarAssinante();
+            }
+        }
+
+        res.send({ ok: ok })
     }
 
     // async deletarUsuario(req, res){
@@ -58,35 +84,6 @@ class AssinantesController {
     //         ok = usuarioModel.deletarUsuario(req.body.usuarioId);
     //     }
     //     res.send({ok: ok})
-    // }
-
-    // async alterarView(req, res) {
-    //     let usuarioModel = new UsuarioModel();
-    //     if(req.params != null && req.params.id != null){
-    //         let cripto = new Criptografia();
-    //         let usuarioId = cripto.descriptografa(req.params.id);           
-    //         usuarioModel = await usuarioModel.buscarUsuario(usuarioId);
-    //     }
-    //     let perfilModel = new PerfilModel();
-    //     let listaPerfil = await perfilModel.listar();
-    //     res.render('usuarios/alterar', { lista: listaPerfil, usuAlteracao: usuarioModel });
-    // }
-
-    // async alterarUsuario(req, res){
-    //     let ok = false;
-    //     if(req.body != null) {
-    //         if(req.body.id > 0 && req.body.nome != null && req.body.email != null && req.body.senha != null && req.body.confSenha != null && req.body.perfilId != null && req.body.ativo != null) {
-    //             if(req.body.senha == req.body.confSenha && req.body.perfilId > 0) {
-    //                 let ativo = req.body.ativo ? "S" : "N";
-    //                 let cripto = new Criptografia()
-    //                 let usuario = new UsuarioModel(req.body.id, req.body.nome, req.body.email, req.body.senha, ativo, req.body.perfilId);
-    //                 usuario.usuarioId = cripto.descriptografa(req.body.id);
-    //                 ok = usuario.gravarUsuario();
-    //             }
-    //         }
-    //     }
-
-    //     res.send({ ok: ok})
     // }
 }
 

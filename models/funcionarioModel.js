@@ -3,16 +3,12 @@ const conexao = new Database();
 
 class FuncionarioModel {
 
-    #fun_id;
     #fun_cpf;
     #fun_nome;
     #fun_telefone;
     #fun_senha;
     #fun_cargo;
     #fun_ativo;
-
-    get fun_id(){return this.#fun_id};
-    set fun_id(val){this.#fun_id = val};
 
     get fun_cpf(){return this.#fun_cpf};
     set fun_cpf(val){this.#fun_cpf = val};
@@ -32,8 +28,7 @@ class FuncionarioModel {
     get fun_ativo(){return this.#fun_ativo};
     set fun_ativo(val){this.#fun_ativo = val};
 
-    constructor(fun_id, fun_cpf, fun_nome, fun_telefone, fun_senha, fun_cargo, fun_ativo) {
-        this.#fun_id = fun_id;
+    constructor(fun_cpf, fun_nome, fun_telefone, fun_senha, fun_cargo, fun_ativo) {
         this.#fun_cpf = fun_cpf;
         this.#fun_nome = fun_nome;
         this.#fun_telefone = fun_telefone;
@@ -42,16 +37,43 @@ class FuncionarioModel {
         this.#fun_ativo = fun_ativo;
     }
 
-    async buscarFuncionario(id){
-        let sql = "select * from tb_funcionarios where fun_id = ?"
-        let valores = [id];
-
-        let rows = await conexao.ExecutaComando(sql, valores);
-        if(rows.length > 0){
-            return new FuncionarioModel(rows[0]["fun_id"], rows[0]["fun_cpf"], rows[0]["fun_nome"], rows[0]["fun_telefone"], rows[0]["fun_senha"], rows[0]["fun_cargo"], rows[0]["fun_ativo"]);
+    async listarFuncionarios(parametro, busca) {
+        let sql = null;
+        if(parametro == "cpf") {
+            sql = "select * from tb_funcionarios where fun_cpf like ?";
+        } else if(parametro == "nome") {
+            sql = "select * from tb_funcionarios where fun_nome like ?";
+        } else if(parametro == "telefone") {
+            sql = "select * from tb_funcionarios where fun_telefone like ?";
+        } else if(parametro == "cargo") {
+            sql = "select * from tb_funcionarios where fun_telefone like ?";
+        } else if(parametro == "ativo") {
+            sql = "select * from tb_funcionarios where fun_ativo like ?";
+        } else if(parametro == "tudo") {
+            sql = 'select * from tb_funcionarios';
         }
-        
-        return null;
+
+        if(sql != null) {
+            let valor = null;
+            if(parametro == "cpf" || parametro == "ativo") {
+                valor = busca;
+            } else {
+                valor = `${busca}`;
+            }
+            let rows = await conexao.ExecutaComando(sql, [valor]);
+            let listaFuncionarios = [];
+            for(let i = 0; i < rows.length; i++){
+                let row = rows[i];
+                listaFuncionarios.push(
+                    new FuncionarioModel(row['fun_cpf'], 
+                    row['fun_nome'], row['fun_telefone'], row['fun_senha'], row['fun_cargo'], row['fun_ativo'])
+                );
+            }
+
+            return listaFuncionarios;
+        } else {
+            return null;
+        }
     }
 
     // async listarUsuarios() {
@@ -106,7 +128,7 @@ class FuncionarioModel {
         
         let rows = await conexao.ExecutaComando(sql, valores);
         if(rows.length > 0){
-            return new FuncionarioModel(rows[0]["fun_id"], rows[0]["fun_cpf"], rows[0]["fun_nome"], rows[0]["fun_telefone"], rows[0]["fun_senha"], rows[0]["fun_cargo"], rows[0]["fun_ativo"]);
+            return new FuncionarioModel(rows[0]["fun_cpf"], rows[0]["fun_nome"], rows[0]["fun_telefone"], rows[0]["fun_senha"], rows[0]["fun_cargo"], rows[0]["fun_ativo"]);
         }
         
         return null;

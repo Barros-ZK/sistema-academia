@@ -3,13 +3,9 @@ const conexao = new Database();
 
 class AssinantesModel {
 
-    #ass_id;
     #ass_cpf;
     #ass_nome;
     #ass_telefone;
-
-    get ass_id(){return this.#ass_id};
-    set ass_id(val){this.#ass_id = val};
 
     get ass_cpf(){return this.#ass_cpf};
     set ass_cpf(val){this.#ass_cpf = val};
@@ -21,8 +17,7 @@ class AssinantesModel {
     set ass_telefone(val){this.#ass_telefone = val};
 
 
-    constructor(ass_id, ass_cpf, ass_nome, ass_telefone) {
-        this.#ass_id = ass_id;
+    constructor(ass_cpf, ass_nome, ass_telefone) {
         this.#ass_cpf = ass_cpf;
         this.#ass_nome = ass_nome;
         this.#ass_telefone = ass_telefone;
@@ -41,13 +36,18 @@ class AssinantesModel {
         }
 
         if(sql != null) {
-            let rows = await conexao.ExecutaComando(sql, [`%${busca}%`]);
-
+            let valor = null;
+            if(parametro == "cpf") {
+                valor = busca;
+            } else {
+                valor = `${busca}`;
+            }
+            let rows = await conexao.ExecutaComando(sql, [valor]);
             let listaAssinantes = [];
             for(let i = 0; i < rows.length; i++){
                 let row = rows[i];
                 listaAssinantes.push(
-                    new AssinantesModel(row['ass_id'], row['ass_cpf'], 
+                    new AssinantesModel(row['ass_cpf'], 
                     row['ass_nome'], row['ass_telefone'])
                 );
             }
@@ -59,7 +59,7 @@ class AssinantesModel {
     }
 
     async cadastrarAssinante() {
-        let result = false;
+        let result = null;
 
         let sql = "insert into tb_assinantes (ass_cpf, ass_nome, ass_telefone) values (?, ?, ?)";
         let valores = [this.#ass_cpf, this.#ass_nome, this.#ass_telefone];
@@ -69,17 +69,16 @@ class AssinantesModel {
         return result;
     }
 
-    // async buscarUsuario(id){
-    //     let sql = "select * from tb_usuariomecanica where usu_id = ?"
-    //     let valores = [id];
+    async alterarAssinante() {
+        let result = null;
 
-    //     let rows = await conexao.ExecutaComando(sql, valores);
-    //     if(rows.length > 0){
-    //         return new UsuarioModel(rows[0]["usu_id"], rows[0]["usu_nome"], rows[0]["usu_email"], rows[0]["usu_senha"], rows[0]["usu_ativo"],
-    //         rows[0]["per_id"]);
-    //     }
-    //     return null;
-    // }
+        let sql = "update tb_assinantes set ass_nome = ?, ass_telefone = ? where ass_cpf = ?";
+        let valores = [this.#ass_nome, this.#ass_telefone, this.#ass_cpf];
+
+        result = await conexao.ExecutaComandoNonQuery(sql, valores);
+
+        return result;
+    }
 
     // async deletarUsuario(usuarioId) {
     //     let sql = "delete from tb_usuariomecanica where usu_id = ?"
@@ -90,21 +89,8 @@ class AssinantesModel {
     //     return result;
     // }
 
-    // async autenticarUsuario(email, senha){
-    //     let sql = "select * from tb_usuariomecanica where usu_email = ? and usu_senha = ? and usu_ativo = 'S'"
-    //     let valores = [email, senha];
-    //     let rows = await conexao.ExecutaComando(sql, valores);
-    //     if(rows.length > 0){
-    //         return new UsuarioModel(rows[0]["usu_id"], rows[0]["usu_nome"], rows[0]["usu_email"], rows[0]["usu_senha"], rows[0]["usu_ativo"],
-    //         rows[0]["per_id"]);
-    //     }
-        
-    //     return null;
-    // }
-
     toJSON() {
         return {
-            ass_id: this.#ass_id,
             ass_cpf: this.ass_cpf,
             ass_nome: this.#ass_nome,
             ass_telefone: this.#ass_telefone

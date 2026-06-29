@@ -17,7 +17,6 @@
         <table id="tabela" class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID Assinante</th>
                     <th>CPF</th>
                     <th>Nome</th>
                     <th>Telefone</th>
@@ -27,14 +26,13 @@
             <tbody>
                 <% for(let i = 0; i<listaAssinantes.length; i++) { %>
                     <tr>
-                        <td><%= listaAssinantes[i].ass_id %></td>
                         <td><%= listaAssinantes[i].ass_cpf %></td>
                         <td><%= listaAssinantes[i].ass_nome %></td>
                         <td><%= listaAssinantes[i].ass_telefone %></td>
                         <td>
                             <div>
-                                <button data-id="<%= listaAssinantes[i].ass_id %>" title="Excluir" class="btn btn-danger btnExcluir"><i class="fas fa-trash"></i></button>
-                                <a href="/assinantes/alterar/<%= listaAssinantes[i].ass_id %>" title="Editar" class="btn btn-primary">
+                                <button data-id="<%= listaAssinantes[i].ass_cpf %>" title="Excluir" class="btn btn-danger btnExcluir"><i class="fas fa-trash"></i></button>
+                                <a href="/assinantes/alterar/<%= listaAssinantes[i].ass_cpf %>" title="Editar" class="btn btn-primary">
                                     <i class="fas fa-pen"></i>
                                 </a>
                             </div>

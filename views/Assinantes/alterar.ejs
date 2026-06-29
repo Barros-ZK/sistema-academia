@@ -1,0 +1,38 @@
+<link href="/css/Usuarios/criar.css" >
+
+<style>
+    .campoErro {
+        border-color: red;
+    }
+</style>
+
+<script src="/js/Assinantes/alterar.js"></script>
+
+<h1>Alterar Assinante</h1>
+
+<div>
+    <div class="alert alert-danger" role="alert" id="erros" style="display:none">
+
+    </div>
+    <div class="alert alert-success" role="alert" id="alertaSucesso" style="display:none;" >
+        
+      </div>
+      <form>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="inputCpf">CPF:</label>
+            <input min="11111111111" max="99999999999" type="number" class="form-control" id="inputCpf" value="<%= assinante[0].ass_cpf %>" disabled>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputNome">Nome:</label>
+            <input maxlength="100" type="text" class="form-control" id="inputNome" value="<%= assinante[0].ass_nome %>">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputTelefone">Telefone:</label>
+            <input maxlength="20" type="text" class="form-control" id="inputTelefone" value="<%= assinante[0].ass_telefone %>">
+          </div>
+        </div>
+        <br><br>
+        <button type="button" id="btnAlterar" class="btn btn-primary">Alterar</button>
+    </form>
+</div>

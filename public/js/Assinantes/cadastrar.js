@@ -28,44 +28,53 @@ async function cadastrarAssinante() {
 
     if(listaErros.length == 0){
         if(validarCPF(inputCpf.value)) {
-            const resposta = await fetch("/assinantes/listar?busca=" + inputCpf.value + "&parametros=cpf");
-            const corpo = await resposta.json();
-        
-            if(corpo == 0) {
-                var data = {
-                    cpf: inputCpf.value,
-                    nome: inputNome.value,
-                    telefone: inputTelefone.value
-                };
-        
-                fetch('/assinantes/cadastrar', { 
-                    method: "POST",
-                    headers: {
-                        "Content-type": "application/json"
-                    },
-                    body: JSON.stringify(data)
-                })
-                .then(r=> {
-                    return r.json();
-                })
-                .then(r=> {          
-                    if(r.ok) {
-                        inputCpf.value = "";
-                        inputNome.value = "";
-                        inputTelefone.value = "";
-        
-                        document.getElementById("alertaSucesso").innerText = "Assinante cadastrado com sucesso!";
-                document.getElementById("alertaSucesso").style = "display:block";
-                    }
-                    else{
-                        document.getElementById("erros").innerText = r.msg;
-                        document.getElementById("erros").style = "display:block";
-                    }
-                })
-                .catch(e=> {
-                    console.log(e);
-                })
-            } else { //cpf ja cadastrado
+            let resposta = await fetch("/assinantes/listar?busca=" + inputCpf.value + "&parametros=cpf");
+            resposta = await resposta.json();
+
+            if(resposta.length == 0) {
+                resposta = await fetch("/funcionarios/listar?busca=" + inputCpf.value + "&parametros=cpf");
+                resposta = await resposta.json();
+
+                if(resposta.length == 0) {
+                    var data = {
+                        cpf: inputCpf.value,
+                        nome: inputNome.value,
+                        telefone: inputTelefone.value
+                    };
+            
+                    fetch('/assinantes/cadastrar', { 
+                        method: "POST",
+                        headers: {
+                            "Content-type": "application/json"
+                        },
+                        body: JSON.stringify(data)
+                    })
+                    .then(r=> {
+                        return r.json();
+                    })
+                    .then(r=> {          
+                        if(r.ok) {
+                            inputCpf.value = "";
+                            inputNome.value = "";
+                            inputTelefone.value = "";
+            
+                            document.getElementById("alertaSucesso").innerText = "Assinante cadastrado com sucesso!";
+                    document.getElementById("alertaSucesso").style = "display:block";
+                        }
+                        else{
+                            document.getElementById("erros").innerText = r.msg;
+                            document.getElementById("erros").style = "display:block";
+                        }
+                    })
+                    .catch(e=> {
+                        console.log(e);
+                    })
+                } else { //cpf cadastrado como funcionario
+                    document.getElementById("inputCpf").classList.add("campoErro");
+                    document.getElementById("erro").innerText = "CPF já cadastrado como funcionário";
+                    document.getElementById("erro").style = "display: block";
+                }
+            } else { //cpf cadastrado como assinante
                 document.getElementById("inputCpf").classList.add("campoErro");
                 document.getElementById("erro").innerText = "CPF já cadastrado, revise-o:";
                 document.getElementById("erro").style = "display: block";

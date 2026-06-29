@@ -23,8 +23,8 @@ class LoginController {
             funcionario = await funcionario.autenticarFuncionario(req.body.inputTelefone, req.body.inputSenha);
             if(funcionario != null) {
                 if(funcionario.fun_ativo == "S") {
-                    res.cookie("funcionarioLogado", funcionario.fun_id);
-                    res.redirect('/');  
+                    res.cookie("funcionarioLogado", funcionario.fun_cpf);
+                    res.redirect('/');
                 } else {
                     res.render('login/index', { msgErro: "Funcionário não está mais ativo", layout: 'login/index' })
                 }
