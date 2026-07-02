@@ -77,14 +77,14 @@ class AssinantesController {
         res.send({ ok: ok })
     }
 
-    // async deletarUsuario(req, res){
-    //     let ok = false;
-    //     if(req.body.usuarioId != null && req.body.usuarioId > 0){
-    //         let usuarioModel = new UsuarioModel();
-    //         ok = usuarioModel.deletarUsuario(req.body.usuarioId);
-    //     }
-    //     res.send({ok: ok})
-    // }
+    async deletarAssinante(req, res){
+        let ok = false;
+        if(req.body.cpf != null && req.body.cpf > 11111111111){
+            let assinante = new AssinantesModel();
+            ok = assinante.deletarAssinante(req.body.cpf);
+        }
+        res.send({ok: ok})
+    }
 }
 
 export default AssinantesController;

@@ -56,7 +56,9 @@ document.addEventListener("DOMContentLoaded", function() {
                         <td>
                             <div>
                                 <button data-cpf="${lista[i].ass_cpf}" title="Excluir" class="btn btn-danger btnExcluir"><i class="fas fa-trash"></i></button>
-                                <a href="/assinantes/alterar/${lista[i].ass_cpf}" title="Editar" class="btn btn-secondary"><i class="fas fa-pen"></i></a>
+                                <a href="/assinantes/alterar/${lista[i].ass_cpf}" title="Editar" class="btn btn-primary">
+                                    <i class="fas fa-pen"></i>
+                                </a>
                             </div>
                         </td>
                     </tr>`;

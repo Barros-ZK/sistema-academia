@@ -76,6 +76,18 @@ class FuncionarioModel {
         }
     }
 
+    async buscarCpfExato(cpf) {
+        let result = null;
+        let sql = "select * from tb_funcionarios where fun_cpf like ?";
+
+        let rows = await conexao.ExecutaComando(sql, [cpf]);
+        if(rows.length > 0) {
+            let row = rows[0];
+            result = new FuncionarioModel(row['fun_cpf'], row['fun_nome'], row['fun_telefone'], row['fun_senha'], row['fun_cargo'], row['fun_ativo']);
+        }
+        return result;
+    }
+
     // async listarUsuarios() {
     //     let sql = 'select * from tb_usuariomecanica u inner join tb_perfilmecanica p on u.per_id = p.per_id';
     //     let rows = await conexao.ExecutaComando(sql);

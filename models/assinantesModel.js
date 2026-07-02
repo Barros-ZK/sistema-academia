@@ -36,13 +36,7 @@ class AssinantesModel {
         }
 
         if(sql != null) {
-            let valor = null;
-            if(parametro == "cpf") {
-                valor = busca;
-            } else {
-                valor = `${busca}`;
-            }
-            let rows = await conexao.ExecutaComando(sql, [valor]);
+            let rows = await conexao.ExecutaComando(sql, [`%${busca}%`]);
             let listaAssinantes = [];
             for(let i = 0; i < rows.length; i++){
                 let row = rows[i];
@@ -80,14 +74,16 @@ class AssinantesModel {
         return result;
     }
 
-    // async deletarUsuario(usuarioId) {
-    //     let sql = "delete from tb_usuariomecanica where usu_id = ?"
-    //     let valores = [usuarioId];
+    async deletarAssinante(cpf) {
+        let result = null;
 
-    //     let result = conexao.ExecutaComandoNonQuery(sql, valores);
+        let sql = "delete from tb_assinantes where ass_cpf = ?"
+        let valores = [cpf];
 
-    //     return result;
-    // }
+        result = await conexao.ExecutaComandoNonQuery(sql, valores);
+
+        return result;
+    }
 
     toJSON() {
         return {

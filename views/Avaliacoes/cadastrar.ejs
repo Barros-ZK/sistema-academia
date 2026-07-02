@@ -1,0 +1,34 @@
+<script src="/js/Assinantes/cadastrar.js"></script>
+<style>
+    .campoErro {
+        border-color: red;
+    }
+</style>
+<div class="container">
+    <h1>Cadastro de Assinantes</h1>
+    
+    <div class="alert alert-danger" role="alert" id="erro" style="display:none">
+
+    </div>
+    <div class="alert alert-success" role="alert" id="alertaSucesso" style="display:none;" >
+        
+      </div>
+    <form>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="inputCpf">CPF:</label>
+            <input min="11111111111" max="99999999999" type="number" class="form-control" id="inputCpf">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputNome">Nome:</label>
+            <input maxlength="100" type="text" class="form-control" id="inputNome">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputTelefone">Telefone:</label>
+            <input maxlength="20" type="text" class="form-control" id="inputTelefone">
+          </div>
+        </div>
+        <br><br>
+        <button type="button" id="btnCadastrar" class="btn btn-primary">Cadastrar</button>
+    </form>
+</div>

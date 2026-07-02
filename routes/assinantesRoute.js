@@ -13,5 +13,5 @@ router.get('/alterar', homeCtrl.erroUrlView);
 router.get('/alterar/:cpf', ctrl.alterarView);
 router.post('/cadastrar', ctrl.cadastrarAssinante);
 router.post('/alterar', ctrl.alterarAssinante);
-// router.post('/excluir', ctrl.deletarUsuario);
+router.post('/excluir', ctrl.deletarAssinante);
 export default router;

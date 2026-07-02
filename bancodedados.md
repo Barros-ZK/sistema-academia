@@ -1,8 +1,15 @@
+CREATE TABLE tb_assinantes (
+  ass_cpf varchar(11) NOT NULL,
+  ass_nome varchar(100),
+  ass_telefone varchar(20),
+  PRIMARY KEY (ass_cpf)
+); 
+
 create table tb_avaliacoes (
 	ava_id int primary key auto_increment,
-    ass_cpf varchar(11),
-    ava_data datetime,
-    ava_pdf mediumblob,
+  ass_cpf varchar(11),
+  ava_data datetime,
+  ava_pdf mediumblob,
     
     constraint fk_assinantes_avaliacoes FOREIGN key (ass_cpf) references tb_assinantes (ass_cpf)
 );
@@ -17,16 +24,16 @@ CREATE TABLE tb_exercicios (
 
 create table tb_planilhas (
 	pla_id int primary key auto_increment,
-    ass_cpf varchar(11),
-    pla_domingo json,
-    pla_segunda json,
-    pla_terca json,
-    pla_quarta json,
-    pla_quinta json,
-    pla_sexta json,
-    pla_sabado json,
-    
-    constraint fk_assinantes_planilhas FOREIGN key (ass_cpf) references tb_assinantes (ass_cpf)
+  ass_cpf varchar(11),
+  pla_domingo json,
+  pla_segunda json,
+  pla_terca json,
+  pla_quarta json,
+  pla_quinta json,
+  pla_sexta json,
+  pla_sabado json,
+  
+  constraint fk_assinantes_planilhas FOREIGN key (ass_cpf) references tb_assinantes (ass_cpf)
 );
 
 CREATE TABLE tb_planilhasseries (
@@ -51,11 +58,11 @@ CREATE TABLE tb_funcionarios (
 insert into tb_funcionarios (fun_cpf, fun_nome, fun_telefone, fun_senha, fun_cargo, fun_ativo) values ('12345678909', 'Admin', '11123456789', 'admin', 'Dono', 'S');
 create table tb_avaliacoes (
 	ava_id int primary key auto_increment,
-    ass_cpf varchar(11),
-    ava_data datetime,
-    ava_pdf mediumblob,
-    
-    constraint fk_assinantes_avaliacoes FOREIGN key (ass_cpf) references tb_assinantes (ass_cpf)
+  ass_cpf varchar(11),
+  ava_data datetime,
+  ava_pdf mediumblob,
+  
+  constraint fk_assinantes_avaliacoes FOREIGN key (ass_cpf) references tb_assinantes (ass_cpf)
 );
 
 CREATE TABLE tb_exercicios (
@@ -68,16 +75,16 @@ CREATE TABLE tb_exercicios (
 
 create table tb_planilhas (
 	pla_id int primary key auto_increment,
-    ass_cpf varchar(11),
-    pla_domingo json,
-    pla_segunda json,
-    pla_terca json,
-    pla_quarta json,
-    pla_quinta json,
-    pla_sexta json,
-    pla_sabado json,
-    
-    constraint fk_assinantes_planilhas FOREIGN key (ass_cpf) references tb_assinantes (ass_cpf)
+  ass_cpf varchar(11),
+  pla_domingo json,
+  pla_segunda json,
+  pla_terca json,
+  pla_quarta json,
+  pla_quinta json,
+  pla_sexta json,
+  pla_sabado json,
+  
+  constraint fk_assinantes_planilhas FOREIGN key (ass_cpf) references tb_assinantes (ass_cpf)
 );
 
 CREATE TABLE tb_planilhasseries (

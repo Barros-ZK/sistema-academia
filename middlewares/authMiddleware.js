@@ -6,9 +6,9 @@ class AuthMiddleware {
         if(req.cookies != undefined && req.cookies.funcionarioLogado != null){
             let funcionarioCpf = req.cookies.funcionarioLogado;
             let funcionario = new FuncionarioModel();
-            funcionario = await funcionario.listarFuncionarios("cpf", funcionarioCpf);
-            if(funcionario != null && funcionario[0].fun_ativo == "S") {
-                res.locals.funcionario = funcionario[0].fun_nome;
+            funcionario = await funcionario.buscarCpfExato(funcionarioCpf);
+            if(funcionario != null && funcionario.fun_ativo == "S") {
+                res.locals.funcionario = funcionario.fun_nome;
                 next();
             }
             else{
@@ -23,8 +23,8 @@ class AuthMiddleware {
     async verificarUsuarioDono(req, res, next) {
         let funcionarioCpf = req.cookies.funcionarioLogado;
         let funcionario = new FuncionarioModel();
-        funcionario = await funcionario.listarFuncionarios("cpf", funcionarioCpf);
-        if(funcionario != null && funcionario[0].fun_cargo == "Dono") {
+        funcionario = await funcionario.buscarCpfExato(funcionarioCpf);
+        if(funcionario != null && funcionario.fun_cargo == "Dono") {
             next();
         }
         else{
