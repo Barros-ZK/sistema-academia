@@ -59,11 +59,11 @@ async function cadastrarAssinante() {
                             inputTelefone.value = "";
             
                             document.getElementById("alertaSucesso").innerText = "Assinante cadastrado com sucesso!";
-                    document.getElementById("alertaSucesso").style = "display:block";
+                    document.getElementById("alertaSucesso").style = "display: block";
                         }
                         else{
-                            document.getElementById("erros").innerText = r.msg;
-                            document.getElementById("erros").style = "display:block";
+                            document.getElementById("erros").innerText = "Houve um problema durante o cadastro, tente novamente";
+                            document.getElementById("erros").style = "display: block";
                         }
                     })
                     .catch(e=> {

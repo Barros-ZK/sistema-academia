@@ -25,7 +25,7 @@ class AssinantesController {
         let assinante = new AssinantesModel();
         let mapa = new Map();
 
-        for (let i = 0; i < parametros.length; i++) {
+        for(let i = 0; i < parametros.length; i++) {
             let listaAssinantes = await assinante.listarAssinantes(parametros[i], busca);
             for(let j = 0; j < listaAssinantes.length; j++) {
                 mapa.set(listaAssinantes[j].ass_cpf, listaAssinantes[j]);
@@ -83,7 +83,7 @@ class AssinantesController {
             let assinante = new AssinantesModel();
             ok = assinante.deletarAssinante(req.body.cpf);
         }
-        res.send({ok: ok})
+        res.send({ ok: ok })
     }
 }
 

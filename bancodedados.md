@@ -8,7 +8,7 @@ CREATE TABLE tb_assinantes (
 create table tb_avaliacoes (
 	ava_id int primary key auto_increment,
   ass_cpf varchar(11),
-  ava_data datetime,
+  ava_data date,
   ava_pdf mediumblob,
     
     constraint fk_assinantes_avaliacoes FOREIGN key (ass_cpf) references tb_assinantes (ass_cpf)

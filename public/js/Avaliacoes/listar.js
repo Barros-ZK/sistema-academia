@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     let btnExcluir = document.querySelectorAll(".btnExcluir");
     for(let i = 0; i < btnExcluir.length; i++){
-        btnExcluir[i].addEventListener("click", excluirAssinante);
+        btnExcluir[i].addEventListener("click", excluirAvaliacao);
     }
 
     let btnBuscar = document.querySelector("#btnBuscar");
@@ -10,14 +10,14 @@ document.addEventListener("DOMContentLoaded", function() {
     btnBuscar.addEventListener("click", function() {
         let busca = document.querySelector("#txtBusca").value;
         let parametros = [];
+        if(document.querySelector("#id").checked) {
+            parametros.push("id");
+        }
         if(document.querySelector("#cpf").checked) {
             parametros.push("cpf");
         }
-        if(document.querySelector("#nome").checked) {
-            parametros.push("nome");
-        }
-        if(document.querySelector("#telefone").checked) {
-            parametros.push("telefone");
+        if(document.querySelector("#data").checked) {
+            parametros.push("data");
         }
         listarAssinantes(busca, parametros);
     })
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
             paramsBusca.append("parametros", parametros[i]);
         }
 
-        fetch("/assinantes/listar?" + paramsBusca.toString())
+        fetch("/avaliacoes/listar?" + paramsBusca.toString())
         .then(function(resposta) {
             return resposta.json();
         })
@@ -50,13 +50,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
         for(let i = 0; i < lista.length; i++) {
             html += `<tr>
+                        <td>${lista[i].ava_id}</td>
                         <td>${lista[i].ass_cpf}</td>
-                        <td>${lista[i].ass_nome}</td>
-                        <td>${lista[i].ass_telefone}</td>
+                        <td>${lista[i].ava_data}</td>
+                        <td><a href="/avaliacoes/download/${lista[i].ava_id}"><i class="fas fa-download"></i></a></td>
+                        <td>
                         <td>
                             <div>
-                                <button data-cpf="${lista[i].ass_cpf}" title="Excluir" class="btn btn-danger btnExcluir"><i class="fas fa-trash"></i></button>
-                                <a href="/assinantes/alterar/${lista[i].ass_cpf}" title="Editar" class="btn btn-primary">
+                                <button data-cpf="${lista[i].ava_id}" title="Excluir" class="btn btn-danger btnExcluir"><i class="fas fa-trash"></i></button>
+                                <a href="/assinantes/alterar/${lista[i].ava_id}" title="Alterar" class="btn btn-secondary">
                                     <i class="fas fa-pen"></i>
                                 </a>
                             </div>
@@ -68,17 +70,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
         let btnExcluir = document.querySelectorAll(".btnExcluir");
         for(let i = 0; i < btnExcluir.length; i++){
-            btnExcluir[i].addEventListener("click", excluirAssinante);
+            btnExcluir[i].addEventListener("click", excluirAvaliacao);
         }
     }
 
-    function excluirAssinante() {
-        if(confirm("Tem certeza que deseja excluir esse assinante?")){
-            let cpf = this.dataset.cpf;
+    function excluirAvaliacao() {
+        if(confirm("Tem certeza que deseja excluir essa avaliação?")){
+            let id = this.dataset.id;
             var data = {
-                cpf: cpf
+                id: id
             }
-            fetch("/assinantes/excluir", {
+            fetch("/avaliacoes/excluir", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -122,9 +124,9 @@ document.addEventListener("DOMContentLoaded", function() {
         var wb = XLSX.utils.table_to_book(document.getElementById("tabela"));
         
         var ws = wb.Sheets[wb.SheetNames[0]]; // first worksheet
-        deleteColumn(ws, 3);
+        deleteColumn(ws, 4);
 
         /* Export to file (start a download) */
-        XLSX.writeFile(wb, "Assinantes.xlsx");
+        XLSX.writeFile(wb, "Avaliacoes.xlsx");
     });
 })

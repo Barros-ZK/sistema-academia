@@ -10,7 +10,7 @@
     <div>
         <input type="checkbox" id="id" name="id" checked><label for="id">Id</label>
         <input type="checkbox" id="cpf" name="cpf" checked><label for="cpf">CPF</label>
-        <input type="checkbox" id="nome" name="nome" checked><label for="nome">Data</label>
+        <input type="checkbox" id="data" name="data" checked><label for="data">Data</label>
         <button id="btnBuscar" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
         <button id="sheetjsexport" class="btn btn-success"><i class="fas fa-file-excel"></i> Exportar para Excel</button>
     </div>
@@ -31,7 +31,7 @@
                         <td><%= listaAvaliacoes[i].ava_id %></td>
                         <td><%= listaAvaliacoes[i].ass_cpf %></td>
                         <td><%= listaAvaliacoes[i].ava_data %></td>
-                        <td><a href="<%= listaAvaliacoes[i].ava_pdf %>" download><i class="fas fa-download"></i></a></td>
+                        <td><a href="/avaliacoes/download/<%= listaAvaliacoes[i].ava_id %>"><i class="fas fa-download"></i></a></td>
                         <td>
                             <div>
                                 <button data-id="<%= listaAvaliacoes[i].ava_id %>" title="Excluir" class="btn btn-danger btnExcluir"><i class="fas fa-trash"></i></button>

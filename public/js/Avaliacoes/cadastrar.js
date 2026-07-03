@@ -3,85 +3,85 @@ document.addEventListener("DOMContentLoaded", function() {
     var btnCadastrar = document.getElementById("btnCadastrar");
 
     btnCadastrar.addEventListener("click", function() {
-        cadastrarAssinante();
+        cadastrarAvaliacao();
     })
 })
 
-async function cadastrarAssinante() {
+async function cadastrarAvaliacao() {
     limparErros();
     
-    var inputCpf = document.getElementById("inputCpf");
-    var inputNome = document.getElementById("inputNome");
-    var inputTelefone = document.getElementById("inputTelefone");
+    var selectCpf = document.getElementById("selectCpf");
+    var inputData = document.getElementById("inputData");
+    var inputPdf = document.getElementById("inputPdf");
 
     var listaErros = [];
 
-    if(inputCpf.value == "" || inputCpf.value == undefined || inputCpf.value == null){
-        listaErros.push("inputCpf");
+    if(selectCpf.value == "0" || selectCpf.value == undefined || selectCpf.value == null){
+        listaErros.push("selectCpf");
     }
-    if(inputNome.value == "" || inputNome.value == undefined || inputNome.value == null){
-        listaErros.push("inputNome");
+    if(inputData.value == "" || inputData.value == undefined || inputData.value == null){
+        listaErros.push("inputData");
     }
-    if(inputTelefone.value == "" || inputTelefone.value == undefined || inputTelefone.value == null){
-        listaErros.push("inputTelefone");
+    if(inputPdf.value == "" || inputPdf.value == undefined || inputPdf.value == null){
+        listaErros.push("inputPdf");
     }
 
     if(listaErros.length == 0){
-        if(validarCPF(inputCpf.value)) {
-            let resposta = await fetch("/assinantes/listar?busca=" + inputCpf.value + "&parametros=cpf");
+        var hoje = new Date();
+        var dd = String(hoje.getDate()).padStart(2, '0');
+        var mm = String(hoje.getMonth() + 1).padStart(2, '0');
+        var aaaa = hoje.getFullYear();
+        hoje = aaaa + '/' + mm + '/' + dd;
+        if(inputData.value <= hoje) {
+            let resposta = await fetch("/avaliacoes/checarData?data=" + inputData.value);
             resposta = await resposta.json();
 
-            if(resposta.length == 0) {
-                resposta = await fetch("/funcionarios/listar?busca=" + inputCpf.value + "&parametros=cpf");
+            if(resposta.ok) { 
+                resposta = await fetch("/avaliacoes/checarPdf?pdf=" + inputPdf.value);
                 resposta = await resposta.json();
-
-                if(resposta.length == 0) {
-                    var data = {
-                        cpf: inputCpf.value,
-                        nome: inputNome.value,
-                        telefone: inputTelefone.value
-                    };
+                if(resposta.ok) {
+                    const formData = new FormData();
+                    formData.append("cpf", selectCpf.value);
+                    formData.append("data", inputData.value);
+                    formData.append("pdf", inputPdf.files[0]);
             
-                    fetch('/assinantes/cadastrar', { 
+                    fetch('/avaliacoes/cadastrar', { 
                         method: "POST",
-                        headers: {
-                            "Content-type": "application/json"
-                        },
-                        body: JSON.stringify(data)
+                        body: formData
                     })
                     .then(r=> {
                         return r.json();
                     })
                     .then(r=> {          
                         if(r.ok) {
-                            inputCpf.value = "";
-                            inputNome.value = "";
-                            inputTelefone.value = "";
+                            selectCpf.value = "0";
+                            inputData.value = "";
+                            inputPdf.value = "";
             
-                            document.getElementById("alertaSucesso").innerText = "Assinante cadastrado com sucesso!";
-                    document.getElementById("alertaSucesso").style = "display:block";
+                            document.getElementById("alertaSucesso").innerText = "Avaliação cadastrada com sucesso!";
+                            document.getElementById("alertaSucesso").style = "display: block";
                         }
                         else{
-                            document.getElementById("erros").innerText = r.msg;
-                            document.getElementById("erros").style = "display:block";
+                            document.getElementById("erros").innerText = "Houve um problema durante o cadastro, tente novamente";
+                            document.getElementById("erros").style = "display: block";
                         }
                     })
                     .catch(e=> {
                         console.log(e);
                     })
-                } else { //cpf cadastrado como funcionario
-                    document.getElementById("inputCpf").classList.add("campoErro");
-                    document.getElementById("erro").innerText = "CPF já cadastrado como funcionário";
+                } else { //não é um arquivo pdf
+                    document.getElementById("inputPdf").classList.add("campoErro");
+                    document.getElementById("erro").innerText = "Por-favor, selecione um arquivo PDF";
                     document.getElementById("erro").style = "display: block";
                 }
-            } else { //cpf cadastrado como assinante
-                document.getElementById("inputCpf").classList.add("campoErro");
-                document.getElementById("erro").innerText = "CPF já cadastrado, revise-o:";
+            } else { //data no futuro pelo banco de dados
+                document.getElementById("inputData").classList.add("campoErro");
+                document.getElementById("erro").innerText = "A data informada está no futuro, corrija-a:";
                 document.getElementById("erro").style = "display: block";
             }
-        } else { //cpf invalido
-            document.getElementById("inputCpf").classList.add("campoErro");
-            document.getElementById("erro").innerText = "CPF inválido, revise-o:";
+        } else { //data no futuro pelo navegador
+            document.getElementById("inputData").classList.add("campoErro");
+            document.getElementById("erro").innerText = "A data informada está no futuro, corrija-a:";
             document.getElementById("erro").style = "display: block";
         }
     }
@@ -106,30 +106,4 @@ function limparErros() {
 
     document.getElementById("erro").style = "display: none";
     document.getElementById("alertaSucesso").style = "display: none";
-}
-
-function validarCPF(cpf) {
-    cpf = cpf.replace(/[^\d]+/g, '');
-
-    if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
-
-    let sum = 0;
-    let remainder;
-
-    for (let i = 1; i <= 9; i++) 
-        sum += parseInt(cpf.substring(i-1, i)) * (11 - i);
-    
-    remainder = (sum * 10) % 11;
-    if ((remainder === 10) || (remainder === 11)) remainder = 0;
-    if (remainder !== parseInt(cpf.substring(9, 10))) return false;
-
-    sum = 0;
-    for (let i = 1; i <= 10; i++) 
-        sum += parseInt(cpf.substring(i-1, i)) * (12 - i);
-    
-    remainder = (sum * 10) % 11;
-    if ((remainder === 10) || (remainder === 11)) remainder = 0;
-    if (remainder !== parseInt(cpf.substring(10, 11))) return false;
-
-    return true;
 }
