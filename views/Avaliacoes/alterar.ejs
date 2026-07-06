@@ -1,14 +1,12 @@
-<link href="/css/Usuarios/criar.css" >
-
 <style>
     .campoErro {
         border-color: red;
     }
 </style>
 
-<script src="/js/Assinantes/alterar.js"></script>
+<script src="/js/Avaliacoes/alterar.js"></script>
 
-<h1>Alterar Assinante</h1>
+<h1>Alterar avaliação de ID <p id="avaId"><%= avaliacao[0].ava_id %></p></h1>
 
 <div>
     <div class="alert alert-danger" role="alert" id="erros" style="display:none">
@@ -20,16 +18,26 @@
       <form>
         <div class="form-row">
           <div class="form-group col-md-4">
-            <label for="inputCpf">CPF:</label>
-            <input min="11111111111" max="99999999999" type="number" class="form-control" id="inputCpf" value="<%= assinante[0].ass_cpf %>" disabled>
+            <label for="selectCpf">Assinante avaliado:</label>
+            <select name="selectCpf" id="selectCpf" class="form-control">
+              <option value="0" disabled>Selecione</option>
+              <% for(let i = 0; i < listaAssinantes.length; i++) { %>
+                <% if(listaAssinantes[i].ass_cpf == avaliacao[0].ass_cpf) { %>
+                  <option value="<%= listaAssinantes[i].ass_cpf %>" selected><%= listaAssinantes[i].ass_nome %></option>
+                <% } else { %>
+                  <option value="<%= listaAssinantes[i].ass_cpf %>"><%= listaAssinantes[i].ass_nome %></option>
+                <% } %>
+              <% } %>
+            </select>
           </div>
           <div class="form-group col-md-4">
-            <label for="inputNome">Nome:</label>
-            <input maxlength="100" type="text" class="form-control" id="inputNome" value="<%= assinante[0].ass_nome %>">
+            <label for="inputData">Data:</label>
+            <input type="date" class="form-control" id="inputData" value="<%= avaliacao[0].ava_data %>">
           </div>
           <div class="form-group col-md-4">
-            <label for="inputTelefone">Telefone:</label>
-            <input maxlength="20" type="text" class="form-control" id="inputTelefone" value="<%= assinante[0].ass_telefone %>">
+            <label for="inputPdf">Documento PDF:</label>
+            <input type="checkbox" id="checkbox"><label for="checkbox">Manter?</label>
+            <input type="file" class="form-control" id="inputPdf" accept="application/pdf">
           </div>
         </div>
         <br><br>

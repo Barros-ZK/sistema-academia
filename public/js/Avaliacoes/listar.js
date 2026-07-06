@@ -52,9 +52,8 @@ document.addEventListener("DOMContentLoaded", function() {
             html += `<tr>
                         <td>${lista[i].ava_id}</td>
                         <td>${lista[i].ass_cpf}</td>
-                        <td>${lista[i].ava_data}</td>
-                        <td><a href="/avaliacoes/download/${lista[i].ava_id}"><i class="fas fa-download"></i></a></td>
-                        <td>
+                        <td>${new Date(lista[i].ava_data).toLocaleDateString('pt-BR')}</td>
+                        <td><a href="/avaliacoes/download/${lista[i].ava_id}" class="btn btn-info"><i class="fas fa-download"></i></a></td>
                         <td>
                             <div>
                                 <button data-cpf="${lista[i].ava_id}" title="Excluir" class="btn btn-danger btnExcluir"><i class="fas fa-trash"></i></button>
@@ -124,6 +123,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var wb = XLSX.utils.table_to_book(document.getElementById("tabela"));
         
         var ws = wb.Sheets[wb.SheetNames[0]]; // first worksheet
+        deleteColumn(ws, 3);
         deleteColumn(ws, 4);
 
         /* Export to file (start a download) */

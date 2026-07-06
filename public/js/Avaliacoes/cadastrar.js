@@ -31,7 +31,7 @@ async function cadastrarAvaliacao() {
         var dd = String(hoje.getDate()).padStart(2, '0');
         var mm = String(hoje.getMonth() + 1).padStart(2, '0');
         var aaaa = hoje.getFullYear();
-        hoje = aaaa + '/' + mm + '/' + dd;
+        hoje = aaaa + '-' + mm + '-' + dd;
         if(inputData.value <= hoje) {
             let resposta = await fetch("/avaliacoes/checarData?data=" + inputData.value);
             resposta = await resposta.json();
@@ -39,6 +39,7 @@ async function cadastrarAvaliacao() {
             if(resposta.ok) { 
                 resposta = await fetch("/avaliacoes/checarPdf?pdf=" + inputPdf.value);
                 resposta = await resposta.json();
+
                 if(resposta.ok) {
                     const formData = new FormData();
                     formData.append("cpf", selectCpf.value);
@@ -71,22 +72,21 @@ async function cadastrarAvaliacao() {
                     })
                 } else { //não é um arquivo pdf
                     document.getElementById("inputPdf").classList.add("campoErro");
-                    document.getElementById("erro").innerText = "Por-favor, selecione um arquivo PDF";
-                    document.getElementById("erro").style = "display: block";
+                    document.getElementById("erros").innerText = "Por-favor, selecione um arquivo PDF";
+                    document.getElementById("erros").style = "display: block";
                 }
             } else { //data no futuro pelo banco de dados
                 document.getElementById("inputData").classList.add("campoErro");
-                document.getElementById("erro").innerText = "A data informada está no futuro, corrija-a:";
-                document.getElementById("erro").style = "display: block";
+                document.getElementById("erros").innerText = "A data informada está no futuro, corrija-a:";
+                document.getElementById("erros").style = "display: block";
             }
         } else { //data no futuro pelo navegador
             document.getElementById("inputData").classList.add("campoErro");
-            document.getElementById("erro").innerText = "A data informada está no futuro, corrija-a:";
-            document.getElementById("erro").style = "display: block";
+            document.getElementById("erros").innerText = "A data informada está no futuro, corrija-a:";
+            document.getElementById("erros").style = "display: block";
         }
-    }
-    else{ //campos preenchidos incorretamente
-        mostrarErros(listaErros)
+    } else{ //campos preenchidos incorretamente
+        mostrarErros(listaErros);
     }
 }
 
@@ -100,9 +100,9 @@ function mostrarErros(lista) {
 }
 
 function limparErros() {
-    document.getElementById("inputCpf").classList.remove("campoErro");
-    document.getElementById("inputNome").classList.remove("campoErro");
-    document.getElementById("inputTelefone").classList.remove("campoErro");
+    document.getElementById("selectCpf").classList.remove("campoErro");
+    document.getElementById("inputData").classList.remove("campoErro");
+    document.getElementById("inputPdf").classList.remove("campoErro");
 
     document.getElementById("erro").style = "display: none";
     document.getElementById("alertaSucesso").style = "display: none";

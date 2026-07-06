@@ -71,18 +71,18 @@ async function cadastrarAssinante() {
                     })
                 } else { //cpf cadastrado como funcionario
                     document.getElementById("inputCpf").classList.add("campoErro");
-                    document.getElementById("erro").innerText = "CPF já cadastrado como funcionário";
-                    document.getElementById("erro").style = "display: block";
+                    document.getElementById("erros").innerText = "CPF já cadastrado como funcionário";
+                    document.getElementById("erros").style = "display: block";
                 }
             } else { //cpf cadastrado como assinante
                 document.getElementById("inputCpf").classList.add("campoErro");
-                document.getElementById("erro").innerText = "CPF já cadastrado, revise-o:";
-                document.getElementById("erro").style = "display: block";
+                document.getElementById("erros").innerText = "CPF já cadastrado, revise-o:";
+                document.getElementById("erros").style = "display: block";
             }
         } else { //cpf invalido
             document.getElementById("inputCpf").classList.add("campoErro");
-            document.getElementById("erro").innerText = "CPF inválido, revise-o:";
-            document.getElementById("erro").style = "display: block";
+            document.getElementById("erros").innerText = "CPF inválido, revise-o:";
+            document.getElementById("erros").style = "display: block";
         }
     }
     else{ //campos preenchidos incorretamente
@@ -95,8 +95,8 @@ function mostrarErros(lista) {
         document.getElementById(lista[i]).classList.add("campoErro");
     }
 
-    document.getElementById("erro").innerText = "Preencha corretamente os campos destacados abaixo:";
-    document.getElementById("erro").style = "display: block";
+    document.getElementById("erros").innerText = "Preencha corretamente os campos destacados abaixo:";
+    document.getElementById("erros").style = "display: block";
 }
 
 function limparErros() {
@@ -104,7 +104,7 @@ function limparErros() {
     document.getElementById("inputNome").classList.remove("campoErro");
     document.getElementById("inputTelefone").classList.remove("campoErro");
 
-    document.getElementById("erro").style = "display: none";
+    document.getElementById("erros").style = "display: none";
     document.getElementById("alertaSucesso").style = "display: none";
 }
 

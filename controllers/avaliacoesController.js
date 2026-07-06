@@ -1,4 +1,5 @@
 import AvaliacoesModel from '../models/avaliacoesModel.js';
+import AssinantesModel from '../models/assinantesModel.js';
 
 class AvaliacoesController {
 
@@ -49,19 +50,23 @@ class AvaliacoesController {
         if (cpf && data && file) {
             const buffer = file.buffer;
     
-            let assinante = new AssinantesModel(cpf, data, buffer);
-            ok = await assinante.cadastrarAssinante();
+            let avaliacao = new AvaliacoesModel(0, cpf, data, buffer);
+            ok = await avaliacao.cadastrarAvaliacao();
         }
 
         res.send({ ok: ok })
     }
 
     async alterarView(req, res) {
-        if(req.params != null && req.params.cpf != null){  
-            let assinante = new AssinantesModel();        
-            assinante = await assinante.listarAssinantes("cpf", req.params.cpf);
-            if(assinante.length > 0) {
-                res.render('assinantes/alterar', { assinante: assinante });
+        if(req.params != null && req.params.id != null){  
+            let avaliacao = new AvaliacoesModel();       
+            avaliacao = await avaliacao.listarAvaliacoes("id", req.params.id);
+            if(avaliacao.length > 0) {
+                let assinante = new AssinantesModel();
+                let listaAssinantes = await assinante.listarAssinantes("tudo");
+
+                avaliacao[0].ava_data = new Date(avaliacao[0].ava_data).toISOString().split("T")[0];
+                res.render('avaliacoes/alterar', { listaAssinantes: listaAssinantes, avaliacao: avaliacao });
             } else {
                 res.render('home/erroUrl');
             }
@@ -70,13 +75,18 @@ class AvaliacoesController {
 
     async alterarAvaliacao(req, res){
         let ok = false;
-        if(req.body != null) {
-            let assinante = new AssinantesModel();
-            assinante = await assinante.listarAssinantes("cpf", req.body.cpf);
-            if(assinante != null && assinante.length > 0 && req.body.nome != null && req.body.telefone != null) {
-                assinante = new AssinantesModel(req.body.cpf, req.body.nome, req.body.telefone);
-                ok = await assinante.alterarAssinante();
+
+        const { id, cpf, data } = req.body;
+        if (id && cpf && data) {
+            let avaliacao;
+            if(req.file) {
+                const buffer = req.file.buffer;
+                avaliacao = new AvaliacoesModel(Number(id), cpf, data, buffer);
+            } else {
+                avaliacao = new AvaliacoesModel(Number(id), cpf, data, null);
             }
+
+            ok = await avaliacao.alterarAvaliacao();
         }
 
         res.send({ ok: ok })
@@ -117,7 +127,7 @@ class AvaliacoesController {
         if(req.query.data != null && req.query.data != undefined) {
             let avaliacao = new AvaliacoesModel();
             avaliacao = await avaliacao.checarData(req.query.data);
-            if(avaliacao == 0) {
+            if(avaliacao == 1) {
                 ok = true;
             }
         }
@@ -127,7 +137,7 @@ class AvaliacoesController {
     async checarPdf(req, res) {
         let ok = false;
         if(req.query.pdf != null && req.query.pdf != undefined) {
-            if('.pdf'.exec(inputPdf.value)) {
+            if(req.query.pdf.toLowerCase().endsWith('.pdf')) {
                 ok = true;
             }
         }

@@ -20,6 +20,6 @@ router.get('/download/:id', ctrl.baixarAvaliacao);
 router.get('/checarData', ctrl.checarData);
 router.get('/checarPdf', ctrl.checarPdf);
 router.post('/cadastrar', upload.single('pdf'), ctrl.cadastrarAvaliacao);
-router.post('/alterar', ctrl.alterarAvaliacao);
+router.post('/alterar', upload.single('pdf'), ctrl.alterarAvaliacao);
 router.post('/excluir', ctrl.deletarAvaliacao);
 export default router;

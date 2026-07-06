@@ -55,10 +55,12 @@ class AssinantesModel {
     async cadastrarAssinante() {
         let result = null;
 
-        let sql = "insert into tb_assinantes (ass_cpf, ass_nome, ass_telefone) values (?, ?, ?)";
-        let valores = [this.#ass_cpf, this.#ass_nome, this.#ass_telefone];
+        if(this.#ass_cpf > 11111111111 && this.#ass_cpf < 99999999999) {
+            let sql = "insert into tb_assinantes (ass_cpf, ass_nome, ass_telefone) values (?, ?, ?)";
+            let valores = [this.#ass_cpf, this.#ass_nome, this.#ass_telefone];
 
-        result = await conexao.ExecutaComandoNonQuery(sql, valores);
+            result = await conexao.ExecutaComandoNonQuery(sql, valores);
+        }
 
         return result;
     }

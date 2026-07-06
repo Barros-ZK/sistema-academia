@@ -23,6 +23,7 @@
                     <th>CPF do Assinante</th>
                     <th>Data</th>
                     <th>Documento</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,8 +31,8 @@
                     <tr>
                         <td><%= listaAvaliacoes[i].ava_id %></td>
                         <td><%= listaAvaliacoes[i].ass_cpf %></td>
-                        <td><%= listaAvaliacoes[i].ava_data %></td>
-                        <td><a href="/avaliacoes/download/<%= listaAvaliacoes[i].ava_id %>"><i class="fas fa-download"></i></a></td>
+                        <td><%= new Date(listaAvaliacoes[i].ava_data).toLocaleDateString('pt-BR') %></td>
+                        <td><a href="/avaliacoes/download/<%= listaAvaliacoes[i].ava_id %>" class="btn btn-info"><i class="fas fa-download"></i></a></td>
                         <td>
                             <div>
                                 <button data-id="<%= listaAvaliacoes[i].ava_id %>" title="Excluir" class="btn btn-danger btnExcluir"><i class="fas fa-trash"></i></button>

@@ -59,10 +59,12 @@ class AvaliacoesModel {
     async cadastrarAvaliacao() {
         let result = null;
 
-        let sql = "insert into tb_avaliacoes (ass_cpf, ava_data, ava_pdf) values (?, ?, ?)";
-        let valores = [this.#ass_cpf, this.#ava_data, this.#ava_pdf];
-
-        result = await conexao.ExecutaComandoNonQuery(sql, valores);
+        if(this.#ava_id == 0) {
+            let sql = "insert into tb_avaliacoes (ass_cpf, ava_data, ava_pdf) values (?, ?, ?)";
+            let valores = [this.#ass_cpf, this.#ava_data, this.#ava_pdf];
+    
+            result = await conexao.ExecutaComandoNonQuery(sql, valores);
+        }
 
         return result;
     }
@@ -70,8 +72,15 @@ class AvaliacoesModel {
     async alterarAvaliacao() {
         let result = null;
 
-        let sql = "update tb_avaliacoes set ass_cpf = ?, ava_data = ?, ava_pdf where ava_id = ?";
-        let valores = [this.#ass_cpf, this.#ava_data, this.#ava_pdf, this.#ava_id];
+        let sql;
+        let valores;
+        if(this.#ava_pdf == null) {
+            sql = "update tb_avaliacoes set ass_cpf = ?, ava_data = ? where ava_id = ?";
+            valores = [this.#ass_cpf, this.#ava_data, this.#ava_id];
+        } else {
+            sql = "update tb_avaliacoes set ass_cpf = ?, ava_data = ?, ava_pdf = ? where ava_id = ?";
+            valores = [this.#ass_cpf, this.#ava_data, this.#ava_pdf, this.#ava_id];
+        }
 
         result = await conexao.ExecutaComandoNonQuery(sql, valores);
 
@@ -92,10 +101,10 @@ class AvaliacoesModel {
     async checarData(data) {
         let result = null;
 
-        let sql = "select if(? > curdate(), 0, 1)"
+        let sql = "select if(? > curdate(), 0, 1) as resultado"
         result = await conexao.ExecutaComando(sql, [data]);
 
-        return result;
+        return result[0].resultado;
     }
 
     toJSON() {

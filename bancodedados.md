@@ -11,7 +11,7 @@ create table tb_avaliacoes (
   ava_data date,
   ava_pdf mediumblob,
     
-    constraint fk_assinantes_avaliacoes FOREIGN key (ass_cpf) references tb_assinantes (ass_cpf)
+  constraint fk_assinantes_avaliacoes FOREIGN key (ass_cpf) references tb_assinantes (ass_cpf)
 );
 
 CREATE TABLE tb_exercicios (

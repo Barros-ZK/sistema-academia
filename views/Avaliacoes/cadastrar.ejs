@@ -7,14 +7,14 @@
 <div class="container">
     <h1>Cadastro de Avaliações</h1>
     
-    <div class="alert alert-danger" role="alert" id="erro" style="display:none"></div>
+    <div class="alert alert-danger" role="alert" id="erros" style="display:none"></div>
     <div class="alert alert-success" role="alert" id="alertaSucesso" style="display:none;" ></div>
     <form>
         <div class="form-row">
           <div class="form-group col-md-4">
             <label for="selectCpf">Assinante avaliado:</label>
-            <select name="selectCpf" id="selectCpf">
-              <option value="0" disabled>Selecione</option>
+            <select name="selectCpf" id="selectCpf" class="form-control">
+              <option value="0" disabled selected>Selecione</option>
               <% for(let i = 0; i < listaAssinantes.length; i++) { %>
                 <option value="<%= listaAssinantes[i].ass_cpf %>"><%= listaAssinantes[i].ass_nome %></option>
               <% } %>
