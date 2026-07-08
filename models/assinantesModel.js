@@ -76,7 +76,7 @@ class AssinantesModel {
         return result;
     }
 
-    async deletarAssinante(cpf) {
+    async excluirAssinante(cpf) {
         let result = null;
 
         let sql = "delete from tb_assinantes where ass_cpf = ?"

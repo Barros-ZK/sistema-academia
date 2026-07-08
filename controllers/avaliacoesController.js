@@ -92,11 +92,11 @@ class AvaliacoesController {
         res.send({ ok: ok })
     }
 
-    async deletarAvaliacao(req, res){
+    async excluirAvaliacao(req, res){
         let ok = false;
-        if(req.body.cpf != null && req.body.cpf > 11111111111){
-            let assinante = new AssinantesModel();
-            ok = assinante.deletarAssinante(req.body.cpf);
+        if(req.body.id != null && req.body.id > 0){
+            let avaliacao = new AvaliacoesModel();       
+            ok = avaliacao.excluirAvaliacao(req.body.id);
         }
         res.send({ ok: ok })
     }

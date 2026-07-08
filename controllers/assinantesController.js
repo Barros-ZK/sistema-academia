@@ -77,11 +77,11 @@ class AssinantesController {
         res.send({ ok: ok })
     }
 
-    async deletarAssinante(req, res){
+    async excluirAssinante(req, res){
         let ok = false;
         if(req.body.cpf != null && req.body.cpf > 11111111111){
             let assinante = new AssinantesModel();
-            ok = assinante.deletarAssinante(req.body.cpf);
+            ok = assinante.excluirAssinante(req.body.cpf);
         }
         res.send({ ok: ok })
     }

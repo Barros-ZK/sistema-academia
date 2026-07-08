@@ -104,6 +104,6 @@ function limparErros() {
     document.getElementById("inputData").classList.remove("campoErro");
     document.getElementById("inputPdf").classList.remove("campoErro");
 
-    document.getElementById("erro").style = "display: none";
+    document.getElementById("erros").style = "display: none";
     document.getElementById("alertaSucesso").style = "display: none";
 }

@@ -87,7 +87,7 @@ class AvaliacoesModel {
         return result;
     }
 
-    async deletarAvaliacao(id) {
+    async excluirAvaliacao(id) {
         let result = null;
 
         let sql = "delete from tb_avaliacoes where ava_id = ?"

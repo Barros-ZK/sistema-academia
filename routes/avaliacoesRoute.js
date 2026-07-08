@@ -21,5 +21,5 @@ router.get('/checarData', ctrl.checarData);
 router.get('/checarPdf', ctrl.checarPdf);
 router.post('/cadastrar', upload.single('pdf'), ctrl.cadastrarAvaliacao);
 router.post('/alterar', upload.single('pdf'), ctrl.alterarAvaliacao);
-router.post('/excluir', ctrl.deletarAvaliacao);
+router.post('/excluir', ctrl.excluirAvaliacao);
 export default router;
