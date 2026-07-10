@@ -54,7 +54,7 @@ class AvaliacoesController {
             ok = await avaliacao.cadastrarAvaliacao();
         }
 
-        res.send({ ok: ok })
+        res.send({ ok: ok });
     }
 
     async alterarView(req, res) {
@@ -89,7 +89,7 @@ class AvaliacoesController {
             ok = await avaliacao.alterarAvaliacao();
         }
 
-        res.send({ ok: ok })
+        res.send({ ok: ok });
     }
 
     async excluirAvaliacao(req, res){
@@ -98,7 +98,7 @@ class AvaliacoesController {
             let avaliacao = new AvaliacoesModel();       
             ok = avaliacao.excluirAvaliacao(req.body.id);
         }
-        res.send({ ok: ok })
+        res.send({ ok: ok });
     }
 
     async baixarAvaliacao(req, res) {

@@ -10,6 +10,7 @@ import homeRouter from './routes/homeRoute.js';
 import assinantesRouter from './routes/assinantesRoute.js';
 import avaliacoesRouter from './routes/avaliacoesRoute.js';
 import funcionariosRouter from './routes/funcionariosRoute.js';
+import exerciciosRouter from './routes/exerciciosRoute.js';
 import loginRouter from './routes/loginRoute.js';
 import AuthMiddleware from './middlewares/authMiddleware.js';
 
@@ -45,6 +46,7 @@ app.use(auth.verificarUsuarioLogado);
 app.use('/', homeRouter);
 app.use('/assinantes', assinantesRouter);
 app.use('/avaliacoes', avaliacoesRouter);
+app.use('/exercicios', exerciciosRouter);
 
 app.use(auth.verificarUsuarioDono);
 app.use('/funcionarios', funcionariosRouter);

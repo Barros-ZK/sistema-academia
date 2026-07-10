@@ -48,7 +48,7 @@ class AssinantesController {
             }
         }
 
-        res.send({ ok: ok })
+        res.send({ ok: ok });
     }
 
     async alterarView(req, res) {
@@ -74,7 +74,7 @@ class AssinantesController {
             }
         }
 
-        res.send({ ok: ok })
+        res.send({ ok: ok });
     }
 
     async excluirAssinante(req, res){
@@ -83,7 +83,7 @@ class AssinantesController {
             let assinante = new AssinantesModel();
             ok = assinante.excluirAssinante(req.body.cpf);
         }
-        res.send({ ok: ok })
+        res.send({ ok: ok });
     }
 }
 

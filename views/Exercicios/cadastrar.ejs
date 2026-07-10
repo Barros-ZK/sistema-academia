@@ -1,0 +1,49 @@
+<script src="/js/Exercicios/cadastrar.js"></script>
+<style>
+    .campoErro {
+        border-color: red;
+    }
+</style>
+<div class="container">
+    <h1>Cadastro de Exercícios</h1>
+    
+    <div class="alert alert-danger" role="alert" id="erros" style="display:none"></div>
+    <div class="alert alert-success" role="alert" id="alertaSucesso" style="display:none;" ></div>
+    <form>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="inputNome">Nome do exercício:</label>
+            <input type="text" class="form-control" id="inputNome">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="selectCpf">Músculo:</label>
+            <select name="selectMusculo" id="selectMusculo" class="form-control">
+              <option value="0" disabled selected>Selecione</option>
+              <option value="Bíceps">Bíceps</option>
+              <option value="Tríceps">Tríceps</option>
+              <option value="Antebraço">Antebraço</option>
+              <option value="Ombro">Ombro</option>
+              <option value="Peito">Peito</option>
+              <option value="Costa">Costa</option>
+              <option value="Abdômen">Abdômen</option>
+              <option value="Quadríceps">Quadríceps</option>
+              <option value="Isquiotibiais">Isquiotibiais</option>
+              <option value="Glúteo">Glúteo</option>
+              <option value="Panturrilha">Panturrilha</option>
+              <option value="Miscelânea">Miscelânea</option>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputImagem">Imagem:</label>
+            <input type="file" class="form-control" id="inputImagem" accept="image/png, image/jpeg, image/jpg">
+          </div>
+          <div class="form-group" id="divPrevia"  style="display:none;">
+            <div>
+              <img width="200" id="previaImagem">
+            </div>
+          </div>
+        </div>
+        <br><br>
+        <button type="button" id="btnCadastrar" class="btn btn-primary">Cadastrar</button>
+    </form>
+</div>
