@@ -26,10 +26,10 @@ async function cadastrarExercicio() {
 
     var listaErros = [];
 
-    if(inputNome.value == "0" || inputNome.value == undefined || inputNome.value == null){
+    if(inputNome.value == "" || inputNome.value == undefined || inputNome.value == null){
         listaErros.push("inputNome");
     }
-    if(selectMusculo.value == "" || selectMusculo.value == undefined || selectMusculo.value == null){
+    if(selectMusculo.value == "0" || selectMusculo.value == undefined || selectMusculo.value == null){
         listaErros.push("selectMusculo");
     }
     if(inputImagem.value == "" || inputImagem.value == undefined || inputImagem.value == null){
@@ -37,7 +37,7 @@ async function cadastrarExercicio() {
     }
 
     if(listaErros.length == 0){
-        let resposta = await fetch("/avaliacoes/checarImg?pdf=" + inputImagem.value);
+        let resposta = await fetch("/exercicios/checarImg?img=" + inputImagem.files[0].name);
         resposta = await resposta.json();
 
         if(resposta.ok) {
@@ -61,8 +61,9 @@ async function cadastrarExercicio() {
 
                     document.getElementById("alertaSucesso").innerText = "Exercício cadastrado com sucesso!";
                     document.getElementById("alertaSucesso").style = "display: block";
+                    document.getElementById("divPrevia").style.display = "block";
                 }
-                else{
+                else {
                     document.getElementById("erros").innerText = "Houve um problema durante o cadastro, tente novamente";
                     document.getElementById("erros").style = "display: block";
                 }
@@ -75,6 +76,8 @@ async function cadastrarExercicio() {
             document.getElementById("erros").innerText = "Por-favor, selecione uma imagem (PNG, JPEG, JPG)";
             document.getElementById("erros").style = "display: block";
         }
+    } else {
+        mostrarErros(listaErros);
     }
 }
 
@@ -83,8 +86,8 @@ function mostrarErros(lista) {
         document.getElementById(lista[i]).classList.add("campoErro");
     }
 
-    document.getElementById("erro").innerText = "Preencha corretamente os campos destacados abaixo:";
-    document.getElementById("erro").style = "display: block";
+    document.getElementById("erros").innerText = "Preencha corretamente os campos destacados abaixo:";
+    document.getElementById("erros").style = "display: block";
 }
 
 function limparErros() {

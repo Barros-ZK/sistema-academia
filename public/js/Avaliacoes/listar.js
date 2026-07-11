@@ -127,6 +127,6 @@ document.addEventListener("DOMContentLoaded", function() {
         deleteColumn(ws, 4);
 
         /* Export to file (start a download) */
-        XLSX.writeFile(wb, "Avaliacoes.xlsx");
+        XLSX.writeFile(wb, "Exercicios.xlsx");
     });
 })

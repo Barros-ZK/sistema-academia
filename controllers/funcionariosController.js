@@ -7,8 +7,8 @@ class FuncionariosController {
     }
 
     // async listarView(req, res) {
-    //     let assinante = new AssinantesModel();
-    //     let listaAssinantes = await assinante.listarAssinantes("tudo");
+    //     let listaAssinantes = new AssinantesModel();
+    //     listaAssinantes = await assinante.listarAssinantes("tudo");
     //     res.render('assinantes/listar', { listaAssinantes: listaAssinantes });
     // }
 

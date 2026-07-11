@@ -95,8 +95,8 @@ function mostrarErros(lista) {
         document.getElementById(lista[i]).classList.add("campoErro");
     }
 
-    document.getElementById("erro").innerText = "Preencha corretamente os campos destacados abaixo:";
-    document.getElementById("erro").style = "display: block";
+    document.getElementById("erros").innerText = "Preencha corretamente os campos destacados abaixo:";
+    document.getElementById("erros").style = "display: block";
 }
 
 function limparErros() {

@@ -44,9 +44,15 @@ class ExerciciosModel {
             let listaExercicios = [];
             for(let i = 0; i < rows.length; i++){
                 let row = rows[i];
+                let img = row['exe_imagem'];
+                if(img[0] == 0xFF && img[1] == 0xD8) {
+                    img = `data:image/jpeg;base64,${row.exe_imagem.toString("base64")}`;
+                } else {
+                    img = `data:image/png;base64,${row.exe_imagem.toString("base64")}`;
+                }
                 listaExercicios.push(
                     new ExerciciosModel(row['exe_id'], 
-                    row['exe_nome'], row['exe_musculo'], row['exe_imagem'])
+                    row['exe_nome'], row['exe_musculo'], img)
                 );
             }
 
@@ -57,16 +63,16 @@ class ExerciciosModel {
     }
 
     async cadastrarExercicio() {
-        // let result = null;
+        let result = null;
 
-        // if(this.#exe_id == 0) {
-        //     let sql = "insert into tb_exercicios (exe_nome, exe_musculo, exe_imagem) values (?, ?, ?)";
-        //     let valores = [this.#exe_nome, this.#exe_musculo, this.#exe_imagem];
+        if(this.#exe_id == 0) {
+            let sql = "insert into tb_exercicios (exe_nome, exe_musculo, exe_imagem) values (?, ?, ?)";
+            let valores = [this.#exe_nome, this.#exe_musculo, this.#exe_imagem];
     
-        //     result = await conexao.ExecutaComandoNonQuery(sql, valores);
-        // }
+            result = await conexao.ExecutaComandoNonQuery(sql, valores);
+        }
 
-        // return result;
+        return result;
     }
 
     async alterarExercicio() {

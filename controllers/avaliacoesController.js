@@ -8,8 +8,8 @@ class AvaliacoesController {
     }
 
     async listarView(req, res) {
-        let avaliacao = new AvaliacoesModel();
-        let listaAvaliacoes = await avaliacao.listarAvaliacoes("tudo");
+        let listaAvaliacoes = new AvaliacoesModel();
+        listaAvaliacoes = await listaAvaliacoes.listarAvaliacoes("tudo");
         res.render('avaliacoes/listar', { listaAvaliacoes: listaAvaliacoes });
     }
 

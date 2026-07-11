@@ -33,9 +33,11 @@
                         <td><%= listaExercicios[i].exe_nome %></td>
                         <td><%= listaExercicios[i].exe_musculo %></td>
                         <td>
-                            <div class="dropdown">
-                                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-eye"></i></button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><img class="dropdown-item" width="20" src="<%= listaExercicios[i].exe_imagem %>"/></div>
+                            <p><a class="btn btn-light" data-toggle="collapse" href="#collapse<%= i %>" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-eye"></i></a></p>
+                            <div class="collapse" id="collapse<%= i %>">
+                                <div class="card card-body">
+                                    <img src="<%= listaExercicios[i].exe_imagem %>" width="190" style="margin: 0 auto;">
+                                </div>
                             </div>
                         </td>
                         <td>

@@ -7,7 +7,9 @@ class ExerciciosController {
     }
 
     async listarView(req, res) {
-        res.render('exercicios/listar');
+        let listaExercicios = new ExerciciosModel();
+        listaExercicios = await listaExercicios.listarExercicios("tudo");
+        res.render('exercicios/listar', { listaExercicios: listaExercicios });
     }
 
     async listarExercicios(req, res){
@@ -34,24 +36,22 @@ class ExerciciosController {
     }
 
     async cadastrarView(req, res) {
-        // let assinante = new AssinantesModel();
-        // let listaAssinantes = await assinante.listarAssinantes("tudo");
-        // res.render('avaliacoes/cadastrar', { listaAssinantes: listaAssinantes });
+        res.render('exercicios/cadastrar');
     }
 
     async cadastrarExercicio(req, res) {
-        // let ok = false;
+        let ok = false;
         
-        // const { cpf, data } = req.body;
-        // const file = req.file;
-        // if (cpf && data && file) {
-        //     const buffer = file.buffer;
+        const { nome, musculo } = req.body;
+        const file = req.file;
+        if (nome && musculo && file) {
+            const buffer = file.buffer;
     
-        //     let avaliacao = new AvaliacoesModel(0, cpf, data, buffer);
-        //     ok = await avaliacao.cadastrarAvaliacao();
-        // }
+            let exercicio = new ExerciciosModel(0, nome, musculo, buffer);
+            ok = await exercicio.cadastrarExercicio();
+        }
 
-        // res.send({ ok: ok });
+        res.send({ ok: ok });
     }
 
     async alterarView(req, res) {
@@ -120,13 +120,14 @@ class ExerciciosController {
     }
 
     async checarImg(req, res) {
-        // let ok = false;
-        // if(req.query.pdf != null && req.query.pdf != undefined) {
-        //     if(req.query.pdf.toLowerCase().endsWith('.pdf')) {
-        //         ok = true;
-        //     }
-        // }
-        // res.send({ ok: ok });
+        let ok = false;
+        if(req.query.img != null && req.query.img != undefined) {
+            let img = req.query.img.toLowerCase()
+            if(img.endsWith('.png') || img.endsWith('.jpeg') || img.endsWith('.jpg')) {
+                ok = true;
+            }
+        }
+        res.send({ ok: ok });
     }
 }
 
