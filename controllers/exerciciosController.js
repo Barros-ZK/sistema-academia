@@ -55,68 +55,44 @@ class ExerciciosController {
     }
 
     async alterarView(req, res) {
-        // if(req.params != null && req.params.id != null){  
-        //     let avaliacao = new AvaliacoesModel();       
-        //     avaliacao = await avaliacao.listarAvaliacoes("id", req.params.id);
-        //     if(avaliacao.length > 0) {
-        //         let assinante = new AssinantesModel();
-        //         let listaAssinantes = await assinante.listarAssinantes("tudo");
-
-        //         avaliacao[0].ava_data = new Date(avaliacao[0].ava_data).toISOString().split("T")[0];
-        //         res.render('avaliacoes/alterar', { listaAssinantes: listaAssinantes, avaliacao: avaliacao });
-        //     } else {
-        //         res.render('home/erroUrl');
-        //     }
-        // }
+        if(req.params != null && req.params.id != null){  
+            let exercicio = new ExerciciosModel()      
+            exercicio = await avaliacao.listarAvaliacoes("id", req.params.id);
+            if(exercicio.length > 0) {
+                let musculos = ["Bíceps", "Tríceps", "Antebraço", "Ombro", "Peito", "Costa", "Abdômen", "Quadríceps", "Isquiotibiais", "Glúteo", "Panturrilha", "Miscelânea"];
+                res.render('exercicios/alterar', { musculos: musculos, exercicio: exercicio });
+            } else {
+                res.render('home/erroUrl');
+            }
+        }
     }
 
     async alterarExercicio(req, res){
-        // let ok = false;
+        let ok = false;
 
-        // const { id, cpf, data } = req.body;
-        // if (id && cpf && data) {
-        //     let avaliacao;
-        //     if(req.file) {
-        //         const buffer = req.file.buffer;
-        //         avaliacao = new AvaliacoesModel(Number(id), cpf, data, buffer);
-        //     } else {
-        //         avaliacao = new AvaliacoesModel(Number(id), cpf, data, null);
-        //     }
+        const { id, nome, musculo } = req.body;
+        if (id && nome && musculo) {
+            let exercicio;
+            if(req.file) {
+                const buffer = req.file.buffer;
+                exercicio = new ExerciciosModel(Number(id), nome, musculo, buffer);
+            } else {
+                exercicio = new ExerciciosModel(Number(id), nome, musculo, null);
+            }
 
-        //     ok = await avaliacao.alterarAvaliacao();
-        // }
+            ok = await exercicio.alterarExercicio();
+        }
 
-        // res.send({ ok: ok });
+        res.send({ ok: ok });
     }
 
     async excluirExercicio(req, res){
-        // let ok = false;
-        // if(req.body.id != null && req.body.id > 0){
-        //     let avaliacao = new AvaliacoesModel();       
-        //     ok = avaliacao.excluirAvaliacao(req.body.id);
-        // }
-        // res.send({ ok: ok });
-    }
-
-    async baixarExercicio(req, res) {
-        // let id = req.params.id;
-    
-        // let avaliacao = new AvaliacoesModel();
-        // avaliacao = await avaliacao.listarAvaliacoes("id", id);
-    
-        // if(avaliacao != null || avaliacao.length != 0) {
-        //     let pdfBuffer = avaliacao[0].ava_pdf;
-    
-        //     res.setHeader("Content-Type", "application/pdf");
-        //     res.setHeader(
-        //         "Content-Disposition",
-        //         `attachment; filename=avaliacao_${id}.pdf`
-        //     );
-        
-        //     res.send(pdfBuffer);
-        // } else {
-        //     res.render('home/erroUrl');
-        // }
+        let ok = false;
+        if(req.body.id != null && req.body.id > 0){
+            let exercicio = new ExerciciosModel();       
+            ok = exercicio.excluirExercicio(req.body.id);
+        }
+        res.send({ ok: ok });
     }
 
     async checarImg(req, res) {

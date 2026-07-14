@@ -1,0 +1,52 @@
+<style>
+    .campoErro {
+        border-color: red;
+    }
+</style>
+
+<script src="/js/Exercicios/alterar.js"></script>
+
+<h1>Alterar exercício de ID <p id="exeId"><%= exercicio[0].exe_id %></p></h1>
+
+<div>
+    <div class="alert alert-danger" role="alert" id="erros" style="display: none">
+
+    </div>
+    <div class="alert alert-success" role="alert" id="alertaSucesso" style="display: none" >
+        
+    </div>
+      <form>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="inputNome">Nome do exercício:</label>
+            <input type="text" class="form-control" id="inputNome" value="<%= exercicio[0].exe_nome %>">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="selectCpf">Músculo:</label>
+            <select name="selectMusculo" id="selectMusculo" class="form-control">
+              <option value="0" disabled>Selecione</option>
+              <% for(let i = 0; i < musculos.length; i++) { %>
+                <% if(musculos[i] == exercicio[0].exe_musculo) { %>
+                  <option value="<%= musculos[i] %>" selected><%= musculos[i] %></option>
+                <% } else { %>
+                  <option value="<%= musculos[i] %>"><%= musculos[i] %></option>
+                <% } %>
+                <option value="<%= musculos[i] %>"><%= musculos[i] %></option>
+              <% } %>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputImagem">Imagem:</label>
+            <input type="checkbox" id="checkbox"><label for="checkbox">Manter?</label>
+            <input type="file" class="form-control" id="inputImagem" accept="image/png, image/jpeg, image/jpg">
+          </div>
+          <div class="form-group" id="divPrevia">
+            <div>
+              <img src="<%= exercicio[0].exe_imagem %>" width="190" style="margin: 0 auto;" id="previaImagem">
+            </div>
+          </div>
+        </div>
+        <br><br>
+        <button type="button" id="btnAlterar" class="btn btn-primary">Alterar</button>
+    </form>
+</div>

@@ -76,32 +76,32 @@ class ExerciciosModel {
     }
 
     async alterarExercicio() {
-        // let result = null;
+        let result = null;
 
-        // let sql;
-        // let valores;
-        // if(this.#exe_imagem == null) {
-        //     sql = "update tb_exercicios set exe_nome = ?, exe_musculo = ? where exe_id = ?";
-        //     valores = [this.#exe_nome, this.#exe_musculo, this.#exe_id];
-        // } else {
-        //     sql = "update tb_exercicios set exe_nome = ?, exe_musculo = ?, exe_imagem = ? where exe_id = ?";
-        //     valores = [this.#exe_nome, this.#exe_musculo, this.#exe_imagem, this.#exe_id];
-        // }
+        let sql;
+        let valores;
+        if(this.#exe_imagem == null) {
+            sql = "update tb_exercicios set exe_nome = ?, exe_musculo = ? where exe_id = ?";
+            valores = [this.#exe_nome, this.#exe_musculo, this.#exe_id];
+        } else {
+            sql = "update tb_exercicios set exe_nome = ?, exe_musculo = ?, exe_imagem = ? where exe_id = ?";
+            valores = [this.#exe_nome, this.#exe_musculo, this.#exe_imagem, this.#exe_id];
+        }
 
-        // result = await conexao.ExecutaComandoNonQuery(sql, valores);
+        result = await conexao.ExecutaComandoNonQuery(sql, valores);
 
-        // return result;
+        return result;
     }
 
     async excluirExercicio(id) {
-        // let result = null;
+        let result = null;
 
-        // let sql = "delete from tb_exercicios where exe_id = ?"
-        // let valores = [id];
+        let sql = "delete from tb_exercicios where exe_id = ?"
+        let valores = [id];
 
-        // result = await conexao.ExecutaComandoNonQuery(sql, valores);
+        result = await conexao.ExecutaComandoNonQuery(sql, valores);
 
-        // return result;
+        return result;
     }
 
     toJSON() {

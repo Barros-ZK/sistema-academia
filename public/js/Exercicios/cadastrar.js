@@ -15,14 +15,16 @@ function carregarPrevia() {
         let img = document.getElementById("previaImagem");
         let urlImg = URL.createObjectURL(this.files[0]);
         img.src = urlImg;
-        document.getElementById("divPrevia").style.display = "block";
+        document.getElementById("divPrevia").style = "display: block";
     }
 }
 
 async function cadastrarExercicio() {
     limparErros();
     
-    let select = document.getElementById("inputNome");
+    var inputNome = document.getElementById("inputNome");
+    var selectMusculo = document.getElementById("selectMusculo");
+    var inputImagem = document.getElementById("inputImagem");
 
     var listaErros = [];
 
@@ -61,7 +63,7 @@ async function cadastrarExercicio() {
 
                     document.getElementById("alertaSucesso").innerText = "Exercício cadastrado com sucesso!";
                     document.getElementById("alertaSucesso").style = "display: block";
-                    document.getElementById("divPrevia").style.display = "block";
+                    document.getElementById("divPrevia").style = "display: none";
                 }
                 else {
                     document.getElementById("erros").innerText = "Houve um problema durante o cadastro, tente novamente";
